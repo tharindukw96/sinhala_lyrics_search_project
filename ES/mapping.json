@@ -1,0 +1,98 @@
+{
+    "settings": {
+       "index": {
+             "number_of_shards": 1,
+             "number_of_replicas": 1
+       },
+       "analysis": {
+         "analyzer": {
+           "english_analyzer": {
+               "type": "custom",
+               "tokenizer": "classic",
+               "char_filter":["punctuation_char_filter"],
+               "filter": ["edge_n_gram_filter"]
+           },
+           "sinhala_analyzer_1": {
+               "type": "custom",
+               "tokenizer": "icu_tokenizer",
+               "char_filter": ["punctuation_char_filter"],
+               "filter": ["edge_n_gram_filter"]      
+           },
+           "sinhala_analyzer_2": {
+               "type": "custom",
+               "tokenizer": "icu_tokenizer",
+               "char_filter":["punctuation_char_filter"]    
+           },
+           "english_search_analyzer" : {
+               "type": "custom",
+               "tokenizer": "classic",
+               "char_filter":["punctuation_char_filter"]
+           },
+           "sinhala_search_analyzer" : {
+               "type": "custom",
+               "tokenizer": "standard",
+               "char_filter":["punctuation_char_filter"]
+           }
+         },
+         "char_filter": {
+            "punctuation_char_filter":{
+               "type":"mapping",
+               "mappings":[".=>","|=>","-=>","_=>","'=>","/=>",",=>"]
+            }
+         },
+         "filter": {
+               "edge_n_gram_filter": {
+                    "type" : "edge_ngram",
+                    "min_gram":"2",
+                    "max_gram":"20",
+                    "side":"front"
+               }
+         }
+       }
+      }, 
+      "mappings": {
+           "properties": {
+             "id": {
+                  "type": "integer"
+             },
+             "titile_singlsh": {
+                  "type": "text",
+                  "analyzer":"english_analyzer",
+                  "search_analyzer": "english_search_analyzer"
+             },
+             "title_si": {
+                  "type": "text",  
+                  "analyzer": "sinhala_analyzer_1",
+                  "search_analyzer":"sinhala_search_analyzer"
+             },
+             "artist": {
+                  "type": "text",
+                  "analyzer":"sinhala_analyzer_1",
+                  "search_analyzer": "sinhala_search_analyzer"
+             },
+             "writer": {
+                  "type": "text",
+                  "analyzer": "sinhala_analyzer_1",
+                  "search_analyzer": "sinhala_search_analyzer"
+             },
+             "music": {
+                  "type": "text",
+                  "analyzer": "sinhala_analyzer_1",
+                  "search_analyzer": "sinhala_search_analyzer"
+             },
+             "genre": {
+                  "type": "text",
+                  "analyzer": "sinhala_analyzer_1",
+                  "search_analyzer": "sinhala_search_analyzer"
+             },
+             "rating": {
+                  "type": "integer"
+             },
+             "lyrics": {
+                  "type":"text",
+                  "analyzer":"sinhala_analyzer_2",
+                  "search_analyzer": "sinhala_search_analyzer"
+             }
+         }
+       } 
+}
