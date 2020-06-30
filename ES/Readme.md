@@ -1,7 +1,7 @@
 # Elastic Search
 
 Fore more information on setting up the ElasticSearch is on the home page of this repository. The final version of song lyrics and metadata are stores in the 
-clean_song_lyrics.csv file. You can add data to ElasticSearch through Kibana. But I used a python script(bulk_insert.py) to add data to elastic search.
+clean_song_lyrics.csv file. You can add data to ElasticSearch through Kibana. But I used a python script[bulk_insert.py](https://github.com/tharindukw96/sinhala_lyrics_search_project/blob/master/ES/bulk_insert.py) to add data to elastic search.
 
 - First create a index named "sinhala_songs"
 
