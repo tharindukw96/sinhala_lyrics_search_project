@@ -79,22 +79,42 @@ PUT sinhala_songs
                   "search_analyzer":"sinhala_search_analyzer"
              },
              "artist": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer":"sinhala_analyzer_1",
                   "search_analyzer": "sinhala_search_analyzer"
              },
              "writer": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer": "sinhala_analyzer_1",
                   "search_analyzer": "sinhala_search_analyzer"
              },
              "music": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer": "sinhala_analyzer_1",
                   "search_analyzer": "sinhala_search_analyzer"
              },
              "genre": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer": "sinhala_analyzer_1",
                   "search_analyzer": "sinhala_search_analyzer",
                   "fielddata": true
@@ -110,6 +130,7 @@ PUT sinhala_songs
          }
        } 
 }
+
 ```
 If above command is succeeded , you will get the below response from elastic search. The above index configuration is in the [mapping.json](https://github.com/tharindukw96/sinhala_lyrics_search_project/blob/master/ES/mapping.json) file.
 
