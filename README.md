@@ -52,6 +52,7 @@ The lyrics data contains in the song_lyrics.json file. It has 1096 song lyrics w
 Kibana is used in this project for easily explore the Elasticsearch services. The all ElasticSearch data is in the ES folder.Before add the data to the ES, first the index shoud be defined. Kibana is really useful to add data, create index and retrive data.I have create a index named "sinhala_songs". The complete index creation json object can be found in the mapping.json.
 
 ```
+PUT sinhala_songs
 {
     "settings": {
        "index": {
@@ -62,14 +63,14 @@ Kibana is used in this project for easily explore the Elasticsearch services. Th
          "analyzer": {
            "english_analyzer": {
                "type": "custom",
-               "tokenizer": "classic",
+               "tokenizer": "lowercase",
                "char_filter":["punctuation_char_filter"],
                "filter": ["edge_n_gram_filter"]
            },
            "sinhala_analyzer_1": {
                "type": "custom",
                "tokenizer": "icu_tokenizer",
-               "char_filter": ["punctuation_char_filter"],
+               "char_filter": ["punctuation_char_remove_filter"],
                "filter": ["edge_n_gram_filter"]      
            },
            "sinhala_analyzer_2": {
@@ -79,19 +80,23 @@ Kibana is used in this project for easily explore the Elasticsearch services. Th
            },
            "english_search_analyzer" : {
                "type": "custom",
-               "tokenizer": "classic",
+               "tokenizer": "lowercase",
                "char_filter":["punctuation_char_filter"]
            },
            "sinhala_search_analyzer" : {
                "type": "custom",
                "tokenizer": "standard",
-               "char_filter":["punctuation_char_filter"]
+               "char_filter":["punctuation_char_remove_filter"]
            }
          },
          "char_filter": {
             "punctuation_char_filter":{
                "type":"mapping",
                "mappings":[".=>","|=>","-=>","_=>","'=>","/=>",",=>"]
+            },
+            "punctuation_char_remove_filter":{
+               "type":"mapping",
+               "mappings":[".=>\\u0020","|=>\\u0020","-=>\\u0020","_=>\\u0020","'=>\\u0020","/=>\\u0020",",=>\\u0020"]
             }
          },
          "filter": {
@@ -120,24 +125,45 @@ Kibana is used in this project for easily explore the Elasticsearch services. Th
                   "search_analyzer":"sinhala_search_analyzer"
              },
              "artist": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer":"sinhala_analyzer_1",
                   "search_analyzer": "sinhala_search_analyzer"
              },
              "writer": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer": "sinhala_analyzer_1",
                   "search_analyzer": "sinhala_search_analyzer"
              },
              "music": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer": "sinhala_analyzer_1",
                   "search_analyzer": "sinhala_search_analyzer"
              },
              "genre": {
-                  "type": "text",
+               "type": "text",
+                  "fields": {
+                       "keyword":{
+                          "type":"keyword"
+                       }
+                   },
                   "analyzer": "sinhala_analyzer_1",
-                  "search_analyzer": "sinhala_search_analyzer"
+                  "search_analyzer": "sinhala_search_analyzer",
+                  "fielddata": true
              },
              "rating": {
                   "type": "integer"
@@ -150,6 +176,7 @@ Kibana is used in this project for easily explore the Elasticsearch services. Th
          }
        } 
 }
+
 
 ```
 
