@@ -179,6 +179,31 @@ PUT sinhala_songs
 
 
 ```
+### Indexing and Querying Techniques Used
+
+1. Tokenizer
+  - ICU_tokenizer 
+    - This tokenizer is best for the text from unicode languages. ICU tokenizer is used for document tokenizing(indexing time).
+  - Standard Tokenizer 
+    - Standard tokenizer is used during the query tokenizing.
+  
+2. Stop word filtering
+
+3. Character filters 
+  - Custom character filter is used. The special characters (‘ “ , | \ / ) are replaced with space in query time and removed in document     indexing. 
+
+4. N Edge Gram Filter 
+  - N edge gram filter used for query and document indexing(all fields except lyrics). This filter generates n-grams for each token. Used to identify spelling mistakes.
+
+### Advanced Features
+1. Facet and Range queries
+  - The search engine support for range queries such as top songs, top songs of Amaradewa, Top songs written by Yamuna Malani, etc. Also, facet queries are supported such as the number of songs for each genre for the search results.
+  
+2. Rule-base classification 
+  - The query was going through a query pre-processing task before the request from ElasticSearch. This was done on the python backend. The query is tokenized by Sinling Sinhala tokenizer and check the affix and base with a specific set of words. This can identify the context of the query(asked for an artist, ask for a writer, ask for best songs, etc).
+  
+3. Boosting queries
+  - The system is boosting queries by Elasticsearch boost. The individual fields set with higher weights after identifying the contexts such as artists, music composers, writers.
 
 After create the "sinhala_songs" index , The next step is adding the document to the Elasticsearch. I have write a small script to insert the data into ElasticSearch(bulk_insert.py). This script take the csv file of the data collection and send documents to ES. The csv version of data set can be found in clean_song_lyrics.csv . Elasticsearch and Pandas additional python libraries are needed to run the bulk_insert.py. 
 
