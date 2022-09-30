@@ -5,7 +5,7 @@ emoji==0.5.4
 Flask==1.1.2
 itsdangerous==1.1.0
 Jinja2==2.11.2
-joblib==0.15.1
+joblib==1.2.0
 MarkupSafe==1.1.1
 nltk==3.5
 numpy==1.19.0
